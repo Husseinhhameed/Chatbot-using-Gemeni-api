@@ -115,30 +115,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.querySelector('.chat-window .input-area button');
     const chatButton = document.querySelector('.chat-button');
     const closeButton = document.querySelector('.chat-window button.close');
+    const chatContainer = document.querySelector('.chat-window .chat');
 
     // Function to send the message
     async function sendMessage() {
         console.log(messages);
-        const userMessage = inputField.value;
+        const userMessage = inputField.value.trim();
 
         if (userMessage.length) {
             try {
                 inputField.value = "";
-                document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend",
+                chatContainer.insertAdjacentHTML("beforeend",
                     `<div class="user">
                         <p>${userMessage}</p>
                     </div>`
                 );
+                chatContainer.scrollTop = chatContainer.scrollHeight;
 
-                document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend",
+                chatContainer.insertAdjacentHTML("beforeend",
                     `<div class="loader"></div>`
                 );
+                chatContainer.scrollTop = chatContainer.scrollHeight;
 
                 const chat = model.startChat(messages);
 
                 let result = await chat.sendMessageStream(userMessage);
 
-                document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend",
+                chatContainer.insertAdjacentHTML("beforeend",
                     `<div class="model">
                         <p></p>
                     </div>`
@@ -148,10 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 for await (const chunk of result.stream) {
                     const chunkText = chunk.text();
-                    modelMessages = document.querySelectorAll(".chat-window .chat div.model");
+                    modelMessages = chatContainer.querySelectorAll("div.model");
                     modelMessages[modelMessages.length - 1].querySelector("p").insertAdjacentHTML("beforeend",
                         `${chunkText}`
                     );
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
                 }
 
                 messages.history.push({
@@ -165,14 +169,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
             } catch (error) {
-                document.querySelector(".chat-window .chat").insertAdjacentHTML("beforeend",
+                chatContainer.insertAdjacentHTML("beforeend",
                     `<div class="error">
                         <p>The message could not be sent. Please try again.</p>
                     </div>`
                 );
             }
 
-            document.querySelector(".chat-window .chat .loader").remove();
+            chatContainer.querySelector(".loader").remove();
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
     }
 
@@ -189,10 +194,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener for the chat button
     chatButton.addEventListener("click", () => {
         document.querySelector("body").classList.add("chat-open");
+        inputField.focus();
     });
 
     // Event listener for the close button
     closeButton.addEventListener("click", () => {
         document.querySelector("body").classList.remove("chat-open");
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            document.querySelector('body').classList.remove('chat-open');
+        }
     });
 });
