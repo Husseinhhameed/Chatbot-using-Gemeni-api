@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 inputField.value = "";
                 chatContainer.insertAdjacentHTML("beforeend",
-                    `<div class="user">
+                    `<div class="user bubble">
                         <p>${userMessage}</p>
                     </div>`
                 );
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let result = await chat.sendMessageStream(userMessage);
 
                 chatContainer.insertAdjacentHTML("beforeend",
-                    `<div class="model">
+                    `<div class="model bubble">
                         <p></p>
                     </div>`
                 );
