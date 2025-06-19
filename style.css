@@ -4,10 +4,10 @@
     --black: #1a1a1a;
 }
 
-body.chat-open {
-    .chat-window {
-        display: flex;
-    }
+body.chat-open .chat-window {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .chat-button {
@@ -24,140 +24,143 @@ body.chat-open {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: box-shadow 0.2s;
+}
 
-    img {
-        width: 50px;
-    }
+.chat-button img {
+    width: 50px;
+}
 
-    &:hover {
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    }
+.chat-button:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .chat-window {
-    * {
-        font-family: "Raleway", sans-serif;
-    }
-
+    font-family: "Raleway", sans-serif;
     display: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: white;
     border-radius: 20px;
-    position: fixed; /* Use fixed to position it relative to the viewport */
+    position: fixed;
     z-index: 999;
-    top: 10%; /* 10% from the top */
-    left: 10%; /* 10% from the left */
-    right: 10%; /* 10% from the right */
-    bottom: 10%; /* 10% from the bottom */
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    bottom: 10%;
     flex-direction: column;
     justify-content: space-between;
-    max-height: 80%; /* Ensure it doesn't exceed 80% of the height */
-    max-width: 80%; /* Ensure it doesn't exceed 80% of the width */
-    overflow: hidden; /* Hide overflow to maintain the border radius */
+    max-height: 80%;
+    max-width: 80%;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
 }
 
+.chat-window .close {
+    border: none;
+    padding: 8px 0;
+    background-color: var(--black);
+    color: white;
+    border-radius: 20px 20px 0 0;
+    cursor: pointer;
+}
 
-    .close {
-        border: none;
-        padding: 8px 0;
-        background-color: var(--black);
-        color: white;
-        border-radius: 20px 20px 0 0;
-        cursor: pointer;
-    }
+.chat-window .chat-title {
+    text-align: center;
+    margin: 0;
+    padding: 12px 0;
+    background-color: var(--black);
+    color: white;
+}
 
-    .chat {
-        flex: 1;
-        padding: 0 8px;
-        overflow-y: scroll;
+.chat-window .chat {
+    flex: 1;
+    padding: 0 8px;
+    overflow-y: auto;
+}
 
-        p {
-            border-radius: 20px;
-            width: 80%;
-            margin: 8px 0;
-            font-size: 16px;
-            padding: 16px;
-        }
+.chat-window .chat p {
+    border-radius: 20px;
+    width: 80%;
+    margin: 8px 0;
+    font-size: 16px;
+    padding: 16px;
+}
 
-        div.model {
+.chat-window .chat div.model p {
+    background-color: var(--grey);
+}
 
-            p {
-                background-color: var(--grey);
-            }
+.chat-window .chat div.user {
+    display: flex;
+    justify-content: flex-end;
+}
 
-            
-        }
+.chat-window .chat div.user p {
+    background-color: var(--blue);
+    color: white;
+}
 
-        div.user {
-            display: flex;
-            justify-content: flex-end;
+.chat-window .chat div.error p {
+    font-size: 14px;
+    text-align: center;
+    color: red;
+}
 
-            p {
-                background-color: var(--blue);
-                color: white;
-            }
-        }
+.chat-window .input-area {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 8px;
+    border-top: 1px solid lightgray;
+}
 
-        div.error {
-            p {
-                font-size: 14px;
-                text-align: center;
-                color: red;
-            }
-        }
-        
-    }
+.chat-window .input-area input {
+    height: 40px;
+    flex: 1;
+    border: none;
+    background-color: var(--grey);
+    border-radius: 20px;
+    padding-left: 20px;
+    font-size: 16px;
+}
 
-    .input-area {
-        height: 70px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 8px;
-        border-top: 1px solid lightgray;
+.chat-window .input-area button {
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    border: none;
+    margin-left: 12px;
+    background-color: var(--blue);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
 
-        input {
-            height: 40px;
-            flex: 1;
-            border: none;
-            background-color: var(--grey);
-            border-radius: 20px;
-            padding-left: 20px;
-            font-size: 16px;
-        }
+.chat-window .input-area button img {
+    width: 18px;
+}
 
-        button {
-            height: 40px;
-            width: 40px;
-            border-radius: 100%;
-            border: none;
-            margin-left: 12px;
-            background-color: var(--blue);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-
-            img {
-                width: 18px;
-            }
-
-            &:hover {
-                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-            }
-        }
-    }
-
-
-
+.chat-window .input-area button:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
 .loader {
     width: 40px;
     opacity: 0.4;
     aspect-ratio: 4;
-    background: radial-gradient(circle closest-side,#000 90%,#0000) 0/calc(100%/3) 100% space;
+    background: radial-gradient(circle closest-side, #000 90%, #0000) 0/calc(100%/3) 100% space;
     clip-path: inset(0 100% 0 0);
     animation: l1 1.5s steps(4) infinite;
-  }
-  @keyframes l1 {to{clip-path: inset(0 -34% 0 0)}}
+}
+
+@keyframes l1 {
+    to {
+        clip-path: inset(0 -34% 0 0);
+    }
+}

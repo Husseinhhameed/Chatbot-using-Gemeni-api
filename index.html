@@ -11,8 +11,9 @@
 </head>
 <body>
 
-    <section class="chat-window">
-        <button class="close">x close</button>
+    <section class="chat-window" aria-label="chat window">
+        <button class="close" aria-label="Close chat">×</button>
+        <h2 class="chat-title">AI Caregiver Assistant</h2>
         <div class="chat">
             <div class="model">
                 <p>Hi, how can I help you?</p>
@@ -20,16 +21,16 @@
             
         </div>
         <div class="input-area">
-            <input placeholder="Ask me anything..." type="text">
-            <button>
-                <img src="send-icon.png" alt="send">
+            <input placeholder="Ask me anything..." type="text" aria-label="Message" />
+            <button aria-label="Send message">
+                <img src="send-icon.png" alt="send icon">
             </button>
         </div>
     </section>
 
-    <div class="chat-button">
+    <button class="chat-button" aria-label="Open chat">
         <img src="chat-icon.png" alt="start chat">
-    </div>
+    </button>
 
     <script type="importmap">
         {
